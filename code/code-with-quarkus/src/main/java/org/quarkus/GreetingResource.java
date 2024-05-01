@@ -3,39 +3,19 @@ package org.quarkus;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.control.ActivateRequestContext;
-import javax.inject.Inject;
 import javax.transaction.Transactional;
-// import javax.persistence.EntityManager;
-// import javax.persistence.PersistenceContext;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.elasticsearch.client.Request;
-import org.elasticsearch.client.RestClient;
+// import org.quarkus.Model.MeritApplicants;
+// import org.quarkus.Model.MeritApplicants_ren;
+// import org.quarkus.Model.ProcessBeneficiary;
+// import org.quarkus.Model.ProcessBeneficiary_ren;
+// import org.quarkus.Model.RegistrationDetails;
+// import org.quarkus.Model.RegistrationDetails_ren;
 
 // import org.quarkus.repo.repository;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
-
-import io.opentelemetry.sdk.metrics.data.Data;
-import io.quarkus.logging.Log;
-import io.vertx.core.json.JsonObject;
 
 
 
@@ -133,28 +113,29 @@ public class GreetingResource implements Processor{
                 exchange.getIn().setBody(meritapplicants);
              }
              //////////////////
+            // add for renewal
 
-            //  if ((exchange.getIn().getHeader("kafka.TOPIC").equals("NSP.renewal.payment.process_beneficary"))){
+             if ((exchange.getIn().getHeader("kafka.TOPIC").equals("NSP.renewal.payment.process_beneficary"))){
 
-            //     System.out.println("Process beneficiary route started");
-            //     ProcessBeneficiary1 processbeneficary = new ProcessBeneficiary(after);
-            //     exchange.getIn().setBody(processbeneficary);
-            //  }
+                System.out.println("Process beneficiary route started");
+                ProcessBeneficiary_ren processbeneficary = new ProcessBeneficiary_ren(after);
+                exchange.getIn().setBody(processbeneficary);
+             }
 
-            //  if ((exchange.getIn().getHeader("kafka.TOPIC").equals("NSP.renewal.nspprod.data_applicant_registration_details"))){
+             if ((exchange.getIn().getHeader("kafka.TOPIC").equals("NSP.renewal.nspprod.data_applicant_registration_details"))){
 
-            //     System.out.println(" data_applicant_registration_details route started");
-            //     RegistrationDetails1 registrationdetails = new RegistrationDetails(after);
-            //     exchange.getIn().setBody(registrationdetails);
-            //  }
+                System.out.println(" data_applicant_registration_details route started");
+                RegistrationDetails_ren registrationdetails = new RegistrationDetails_ren(after);
+                exchange.getIn().setBody(registrationdetails);
+             }
 
 
-            //  if ((exchange.getIn().getHeader("kafka.TOPIC").equals("NSP.renewal.payment.in_merit_applicants"))){
+             if ((exchange.getIn().getHeader("kafka.TOPIC").equals("NSP.renewal.payment.in_merit_applicants"))){
 
-            //     System.out.println(" data_applicant_registration_details route started");
-            //     MeritApplicants1 meritapplicants = new MeritApplicants(after);
-            //     exchange.getIn().setBody(meritapplicants);
-            //  }
+                System.out.println(" data_applicant_registration_details route started");
+                MeritApplicants_ren meritapplicants = new MeritApplicants_ren(after);
+                exchange.getIn().setBody(meritapplicants);
+             }
 
             //  // add for nsp.renewal
             //  if ((exchange.getIn().getHeader("kafka.TOPIC").equals("NSP.renewal.payment.process_beneficary"))){
