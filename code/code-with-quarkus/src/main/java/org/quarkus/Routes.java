@@ -39,32 +39,32 @@ public class Routes extends RouteBuilder {
 
         // from("direct:kafka")
         
-        // from("kafka:{{kafka.topic.name0}}?brokers=localhost:9092&autoOffsetReset=earliest&groupId=Cons_OPS")
-        //         .routeId("FromKafkareg")
-        //         .log("Received : \"${headers}\"")
-        //         .log("Received : \"${body}\"")
-        //         .unmarshal().json()
-        //         .process(greetingResource)
-        //         .setHeader("application_id",simple("${body.getApplication_id}"))
-        //         .log("op : ${header.op}")
-        //         .marshal().json()
-        //         .log("completed here ${body}")
-        //         .setHeader(Exchange.HTTP_METHOD,constant("POST"))
-        //         .setHeader(Exchange.CONTENT_TYPE,constant(ContentType.APPLICATION_JSON))
-        //         .choice().when(simple("${header.op} == 'u'"))
-        //         .log("chstart")
-        //         .setBody(simple("{\"doc\":${body}}"))
-        //         .toD("http://{{host.port.elastic}}/stud_2122/_update/${headers.application_id}")
-        //         .log("chend")
-        //         .endChoice()
-        //         .otherwise()
-        //         .log("otherstart")
-        //         .toD("http://{{host.port.elastic}}/stud_2122/_doc/${headers.application_id}")
-        //         // .log("Inserting data in db ${headers.application_id}")
-        //         // .toD("sql:insert into camel_temp_records (application_id, registration) values ('${headers.application_id}', 'true')")
-        //         // .log("insert end ${headers}")
-        //         .log("otherend")
-        //         .end();
+        from("kafka:{{kafka.topic.name0}}?brokers=localhost:9092&autoOffsetReset=earliest&groupId=Cons_OPS")
+                .routeId("FromKafkareg")
+                .log("Received : \"${headers}\"")
+                .log("Received : \"${body}\"")
+                .unmarshal().json()
+                .process(greetingResource)
+                .setHeader("application_id",simple("${body.getApplication_id}"))
+                .log("op : ${header.op}")
+                .marshal().json()
+                .log("completed here ${body}")
+                .setHeader(Exchange.HTTP_METHOD,constant("POST"))
+                .setHeader(Exchange.CONTENT_TYPE,constant(ContentType.APPLICATION_JSON))
+                .choice().when(simple("${header.op} == 'u'"))
+                .log("chstart")
+                .setBody(simple("{\"doc\":${body}}"))
+                .toD("http://{{host.port.elastic}}/stud_2122/_update/${headers.application_id}")
+                .log("chend")
+                .endChoice()
+                .otherwise()
+                .log("otherstart")
+                .toD("http://{{host.port.elastic}}/stud_2122/_doc/${headers.application_id}")
+                // .log("Inserting data in db ${headers.application_id}")
+                // .toD("sql:insert into camel_temp_records (application_id, registration) values ('${headers.application_id}', 'true')")
+                // .log("insert end ${headers}")
+                .log("otherend")
+                .end();
 
 
 
@@ -90,6 +90,7 @@ public class Routes extends RouteBuilder {
                 .otherwise()
                 .log("otherstart")
                 .toD("http://{{host.port.elastic}}/stud_2122/_doc/${headers.application_id}");
+                
 
 
 
@@ -163,7 +164,7 @@ public class Routes extends RouteBuilder {
  
                 // for nsp_renewal
                 from("kafka:{{kafka.topic.name2}}?brokers=localhost:9092&autoOffsetReset=earliest&groupId=Cons_OPS")
-                .routeId("FromKafkaWarb")
+                .routeId("ProcessBeneficiary_ren")
                 .log("Received : \"${headers}\"")
                 .log("Received : \"${body}\"")
                 .unmarshal().json()
@@ -263,7 +264,7 @@ public class Routes extends RouteBuilder {
                 .end()
                 .end()
                 ;
-
+//////////////////////////////////////////////////////////////
 
 
 
